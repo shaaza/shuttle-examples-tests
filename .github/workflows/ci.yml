@@ -35,6 +35,7 @@ jobs:
       with:
         deploy-key: ${{ secrets.SHUTTLE_API_KEY }}
         working-directory: "deployment-tests/${{ matrix.value }}"
+        beta: true
 
     - name: Call Actix Api
       id: call-api
@@ -46,7 +47,7 @@ jobs:
         echo "result=$RESULT" >> "$GITHUB_OUTPUT"
 
     - name: If Api isn't returning "Hello World!"
-      if: contains(steps.call-api.outputs.result, 'Hello')
+      if: ${{!contains(steps.call-api.outputs.result, 'Hello')}}
       run: |
         echo "The API returned: '${{ steps.call-api.outputs.result }}'"
         exit 1
