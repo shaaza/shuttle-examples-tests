@@ -35,7 +35,7 @@ jobs:
       with:
         deploy-key: ${{ secrets.SHUTTLE_API_KEY }}
         working-directory: "deployment-tests/${{ matrix.value }}"
-        beta: true
+        beta: "true"
 
     - name: Call Actix Api
       id: call-api
