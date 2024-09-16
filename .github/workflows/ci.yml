@@ -31,9 +31,8 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Deploy Actix Web
-      uses: shuttle-hq/deploy-action@main
+      uses: shaaza/deploy-action-beta@main
       with:
-
         deploy-key: ${{ secrets.SHUTTLE_API_KEY }}
         working-directory: "deployment-tests/${{ matrix.value }}"
 
@@ -47,7 +46,7 @@ jobs:
         echo "result=$RESULT" >> "$GITHUB_OUTPUT"
 
     - name: If Api isn't returning "Hello World!"
-      if: steps.call-api.outputs.result != 'Hello World!'
+      if: contains(steps.call-api.outputs.result, 'Hello')
       run: |
         echo "The API returned: '${{ steps.call-api.outputs.result }}'"
         exit 1
